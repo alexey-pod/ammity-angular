@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+    <head>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<title ng-bind-template="{{init.config.site_name +' | ' + page.page_item.title}}"></title>
+		<meta name="keywords" content="профессиональное спортивное оборудование,беговые дорожки,эллиптические тренажеры,велотренажеры,гребные тренажеры,оборудование для фитнес-клубов" />
+		<meta name="description" content="Ammity - профессиональное спортивное кардио- оборудование премиум класса. Тренажеры для фитнес-клубов." />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="/css/client.css?v=4465567" type="text/css" />
+		<!--
+		-->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:700&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Serif:400,400italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+		
+		
+        <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    </head>
+    <body>
+		<!--
+		-->
+		<img src="/page_form_preloader_40x28.gif" class="hide" id="preloader_image" />
+		<div class="overlay" id="overlay" style="display:none_;"></div>
+		<div id="page_form_preloader" class="page_form_preloader" style="display: block_;">
+			<div class="bg"></div>
+			<div class="preloader"></div>
+		</div>
+		<!--
+		-->
+		<base href="/">
+        <div id="global-wrapper" class="blurred_">
+            <div id="wrapper" class="home">
+            <header id="header" class="clearfix">
+                <div class="logo">
+					<a href="/">Ammity</a>
+				</div>
+                <!-- end logo -->
+                <div class="header-right">
+					<div id="top_search_form_container" class="top_search_form_container" style=""></div>
+                    <nav class="top-nav as_block">
+                        <ul ng-controller="top_basket_ctrl">
+							<li>
+								<a class="register" href="/pages/cooperation/">сотрудничество</a>
+							</li>
+							<li ng-if="basket.summa!=0" class="basket_top">
+								<div class="inner">
+									<a class="b_info" href="/basket/">
+										<div class="line_1">
+											<div class="text">корзина</div>
+										</div>
+										<div class="line_2">
+											<span class="text">Сумма:</span>
+											<span class="sum"><span>{{basket.summa_str}}</span> руб.</span>
+										</div>
+										<div class="rasp"></div>
+									</a>
+									<div class="b_detail">
+										<div class="b_list">
+											<!--href="{{item.url}}"-->
+											<a 
+												ng-repeat='item in basket.ann_array'
+												>
+												<div class="item">
+													<div class="delete" ng-click="deleteFromBasket(item);"></div>
+													<div class="image">
+														<img src="/img/iResize.php?size=80&bg=ffffff&img={{item.image}}" />
+													</div>
+													<div class="text">
+														<div class="l1">{{item.cat_name_one}}</div>
+														<div class="l2">AMMITY {{item.seria_name}} {{item.name}}</div>
+													</div>
+													<div class="qty">
+														<span>{{item.amount}} шт.</span>
+													</div>
+													<div class="sum">
+														<span>{{item.summa_str}} руб.</span>
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="b_total">
+											<div class="text_panel">
+												<div class="sum"><span>{{basket.summa_str}}</span></div>
+												<div class="sum_text">Сумма заказа:</div>
+											</div>
+											<div class="btn_panel">
+												<a href="/basket/" class="btn">Оформить...</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+                    </nav>
+                    <!-- end top-nav -->
+                    <div class="form-row">
+                        <nav>
+							<quick_search></quick_search>
+							<ul>
+								<li>
+									<a href="/pages/search_dealer/">поиск диллера</a>
+								</li>
+                                <li>
+									<a href="/pages/product_registration/">регистрация продукта</a>
+								</li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- end form-row -->
+                    <nav class="nav clearfix">
+                        <ul>
+                            <li><a href="/pages/contact/">контакты</a></li>
+                            <li><a href="/pages/presentation/">презентации</a></li>
+                            <li><a href="/pages/action/">акции</a></li>
+                            <li><a href="/pages/about/">о компании</a></li>
+                            <li><a href="/pages/app/">APP</a></li>
+                            <li><a href="/catalog/">продукция</a></li>
+                            <li><a href="/">Главная</a></li>                                                       
+                        </ul>
+                    </nav>
+                    <!-- end nav -->
+                </div>
+                <!-- end header-right -->
+            </header>
+            <!-- end header -->
+            <section id="container" class="clearfix">
+				<ng-view></ng-view>
+				<aside class="sidebar"
+					ng-style="page.page_item.mnemonic=='index' || page.page_item.mnemonic=='compare' ?{'display':'none'}:{}"
+				>
+					<div><!-- левое меню -->
+						<nav ng-repeat='left_menu_item in init.left_menu'>
+							<ul>
+								<li 
+									ng-class="{open: global_cat_mnemonic==left_menu_item.mnemonic}"
+								>
+									<!--
+									ng-style="(left_menu_item.link_disable==1)?{'display':'none'}:{}"
+									-->
+									<a ng-if="left_menu_item.link_disable==1">{{left_menu_item.name}}</a>
+									<a 
+										ng-if="left_menu_item.link_disable==0"
+										ng-href="{{(left_menu_item.link_disable==1)?('#'):(left_menu_item.url)}}"
+									>{{left_menu_item.name}}</a>
+									<!--{if $left_menu[i].seria_array}-->
+										<ul id="submenu_{{left_menu_item.id}}" 
+											class="submenu" 
+											ng-style="global_cat_mnemonic!=left_menu_item.mnemonic?{'display':'none'}:{}"
+										>
+											<li ng-repeat='seria_item in left_menu_item.seria_array'>
+												<a href="{{seria_item.url}}">{{seria_item.name}}</a>
+												<ul>
+													<a	ng-repeat='ann_item in seria_item.ann_array'
+														ng-class="{selected: global_ann_mnemonic==ann_item.mnemonic}"
+														href="{{ann_item.url}}"
+													>{{ann_item.name}}</a>
+												</ul>
+											</li>
+										</ul>
+									<!--{/if}-->
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<div><!-- баннеры -->
+						<a	ng-repeat='pr_item in init.pr_left'
+							href="{{pr_item.url}}" class="aside-widget">
+							<img ng-src="{{pr_item.icon_white}}"/>
+							<h3 
+								ng-if="pr_item.disable_name==1" 
+								style="color:#000;background:none;" 
+								ng-bind-html="pr_item.name | html"
+								></h3>
+							<h3 ng-if="pr_item.disable_name!=1"
+								ng-bind-html="pr_item.name | html"
+							></h3>
+							<div class="url_name">{{pr_item.url_name}}</div>
+						</a>
+					</div>
+				</aside>
+			</section>
+            <!-- end conteiner -->
+            <footer id="footer" class="clearfix">
+                <p class="copy">© LTD «AMMITY», 2005–2015</p>
+                <ul class="social-link">
+                    <li><p>Читайте нас: </p></li>
+                    <li class="vk"><a href="#"></a></li>
+                    <li class="fb"><a href="#"></a></li>
+                    <li class="twitter"><a href="#"></a></li>
+                    <li class="rss"><a href="#"></a></li>
+                </ul>
+            </footer>
+            <!-- end footer -->
+        </div>
+        <!-- end wrapper -->
+		
+        </div><!-- end global-wrapper -->
+		
+		<div class="login_form" id="login_form">
+			<div class="header">
+				<span>вход в кабинет дилера</span>
+				<div class="close"></div>
+			</div>
+			<div class="content">
+				<div class="line">
+					<input type="text" value="" placeholder="Логин (email)" id="user_auth_login" />
+				</div>
+				<div class="line">
+					<input type="password" value="" placeholder="Пароль" id="user_auth_password" />
+				</div>
+				<div class="error">Неверное имя пользователя или пароль</div>
+				<div class="btn_block">
+					<div class="btn send">
+						Войти
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--jquery-->
+		<script type="text/javascript" src="/js/jquery/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="/js/jquery/jquery-ui-1.8.6.custom.min.js"></script><!--версия под которую велась разработка-->
+		<link href="/js/jquery/jquery-ui-1.8.6.custom.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="/js/jquery/jquery.tools.min.js"></script>
+        <!--END jquery-->
+		
+		<!-- загрузка файлов -->
+			<!--product_registration-->
+			<script src="/js/fileuploader/fileuploader_2.js" type="text/javascript"></script>
+			<link href="/js/fileuploader/fileuploader.css" rel="stylesheet" type="text/css" />
+			<!--
+			-->
+		<!-- END загрузка файлов -->
+		
+		
+		<!--search_dealer-->
+		<!--
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+		-->
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl2ei7wUuccuWnA5CCoD7Pv9n89ag92MQ" type="text/javascript"></script>
+		<!--END search_dealer-->
+		
+		<!-- lightbox -->
+			<link href="/js/jquery/lightbox/css/jquery.lightbox-0.5.css" rel="stylesheet" type="text/css" media="screen" />
+			<script src="/js/jquery/lightbox/jquery.lightbox-0.5.pack2.js" type="text/javascript"></script>
+		<!-- END lightbox -->
+		
+		<!-- подключаем скроллер -->
+			<!--/pages/presentation/-->
+			<link rel="stylesheet" type="text/css" href="/js/scroll/js-scrollbars-v2/scrollbars.css" />
+			<link rel="stylesheet" type="text/css" href="/js/scroll/js-scrollbars-v2/scrollbars-grey.css" />
+			<script src="/js/scroll/js-scrollbars-v2/jquery.event.drag-2.0.min.js"></script>
+			<script src="/js/scroll/js-scrollbars-v2/jquery.ba-resize.min.js"></script>
+			<script src="/js/scroll/js-scrollbars-v2/mousehold.js"></script>
+			<script src="/js/scroll/js-scrollbars-v2/jquery.mousewheel.js"></script>
+			<script src="/js/scroll/js-scrollbars-v2/aplweb.scrollbars_2.js"></script>
+		<!--END подключаем скроллер -->
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+		
+		<script src="/app/app.js"></script>
+    </body>
+</html>

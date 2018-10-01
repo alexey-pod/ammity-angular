@@ -1,0 +1,43 @@
+AddDefaultCharset utf-8
+Options All -ExecCGI -Indexes -Includes +FollowSymLinks
+
+# включение директив php
+php_value	magic_quotes_gpc	On
+php_value	display_errors	On
+
+
+
+
+RewriteEngine On  
+	
+	#редирект на без www
+	#локально
+	RewriteCond %{HTTP_HOST} ^www.loc_ammity_angular.ru$ [NC]
+	RewriteRule ^(.*)$ http://loc_ammity_angular.ru/$1 [R=301,L]
+	#интернет
+	RewriteCond %{HTTP_HOST} ^www.ammity-angular.likeuse.ru$ [NC]
+	RewriteRule ^(.*)$ http://ammity-angular.likeuse.ru/$1 [R=301,L]
+
+
+  # старая версия роутинга
+  # If an existing asset or directory is requested go to it as it is
+  #RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+  #RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+  #RewriteRule ^ - [L]
+  # If the requested resource doesn't exist, use index.html
+  #RewriteRule ^ /index.html
+  #RewriteRule ^ /
+
+  
+	# новая версия роутинга  
+	# взята с сайта под backbone
+	RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !index
+    RewriteRule (.*) index.html [L]
+  
+  
+  
+
+
+
